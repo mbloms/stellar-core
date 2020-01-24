@@ -7,7 +7,11 @@ case "$0" in
 esac
 
 # Bail if not under git
-git rev-parse
+_git_dir=$(git rev-parse --show-cdup)
+if [[ -n $_git_dir ]]; then
+	echo "not a proper git clone"
+	exit 128
+fi
 
 trap 'rm -f src/src.mk lib/medida.mk lib/lib.mk' 0
 
